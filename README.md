@@ -1,3 +1,5 @@
+# This project is work in progress
+
 # About
 Plaudern is an app to manage comments for static websites.
 
