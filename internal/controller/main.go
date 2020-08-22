@@ -29,4 +29,8 @@ func RegisterRoutes(r *gin.Engine) {
 
 		c.JSON(http.StatusOK, gin.H{})
 	})
+
+	r.GET("/thread/:id", func(c *gin.Context) {
+		c.JSON(http.StatusNotFound, gin.H{}) // TODO: Implement
+	})
 }
