@@ -11,7 +11,7 @@ type CreateComment struct {
 	ThreadId string
 }
 
-func ParseComment(r *gin.Context) (*CreateComment, error) {
+func ParseCreateComment(r *gin.Context) (*CreateComment, error) {
 	msg := r.PostForm("message")
 	threadId := r.PostForm("threadId")
 

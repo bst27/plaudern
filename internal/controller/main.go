@@ -18,7 +18,7 @@ func RegisterRoutes(r *gin.Engine) {
 	})
 
 	r.POST("/comment", func(ctx *gin.Context) {
-		req, err := request.ParseComment(ctx)
+		req, err := request.ParseCreateComment(ctx)
 
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{
