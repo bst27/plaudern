@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"fmt"
+	"github.com/bst27/plaudern/internal/database"
 	"github.com/bst27/plaudern/internal/model/api/request"
 	"github.com/bst27/plaudern/internal/model/comment"
 	"github.com/gin-gonic/gin"
@@ -34,7 +34,19 @@ func RegisterRoutes(r *gin.Engine) {
 			return
 		}
 
-		fmt.Println(cmnt) // TODO: Persist request
+		db, err := database.Open()
+		if err != nil {
+			log.Println(err)
+			ctx.JSON(http.StatusInternalServerError, gin.H{})
+			return
+		}
+
+		err = comment.Save(cmnt, db)
+		if err != nil {
+			log.Println(err)
+			ctx.JSON(http.StatusInternalServerError, gin.H{})
+			return
+		}
 
 		ctx.JSON(http.StatusOK, gin.H{})
 	})
