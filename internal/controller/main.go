@@ -2,8 +2,10 @@ package controller
 
 import (
 	"fmt"
-	"github.com/bst27/plaudern/internal/model/api/comment"
+	"github.com/bst27/plaudern/internal/model/api/request"
+	"github.com/bst27/plaudern/internal/model/comment"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"time"
 )
@@ -15,19 +17,26 @@ func RegisterRoutes(r *gin.Engine) {
 		})
 	})
 
-	r.POST("/comment", func(c *gin.Context) {
-		newComment, err := comment.FromRequest(c)
+	r.POST("/comment", func(ctx *gin.Context) {
+		req, err := request.ParseComment(ctx)
 
 		if err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
+			ctx.JSON(http.StatusBadRequest, gin.H{
 				"Error": err.Error(),
 			})
 			return
 		}
 
-		fmt.Println(newComment) // TODO: Persist comment
+		cmnt, err := comment.New(req.Message)
+		if err != nil {
+			log.Println(err)
+			ctx.JSON(http.StatusInternalServerError, gin.H{})
+			return
+		}
 
-		c.JSON(http.StatusOK, gin.H{})
+		fmt.Println(cmnt) // TODO: Persist request
+
+		ctx.JSON(http.StatusOK, gin.H{})
 	})
 
 	r.GET("/thread/:id", func(c *gin.Context) {
