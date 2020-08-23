@@ -7,28 +7,31 @@ import (
 )
 
 type Comment struct {
-	id      string
-	created time.Time
-	message string
+	id       string
+	created  time.Time
+	threadId string
+	message  string
 }
 
-func New(msg string) (*Comment, error) {
+func New(msg string, threadId string) (*Comment, error) {
 	if !IsValidMessage(msg) {
 		return nil, errors.New("invalid message")
 	}
 
 	return &Comment{
-		id:      uuid.New().String(),
-		created: time.Now(),
-		message: msg,
+		id:       uuid.New().String(),
+		created:  time.Now(),
+		threadId: threadId,
+		message:  msg,
 	}, nil
 }
 
-func load(id string, created time.Time, message string) *Comment {
+func load(id string, created time.Time, threadId string, message string) *Comment {
 	return &Comment{
-		id:      id,
-		created: created,
-		message: message,
+		id:       id,
+		created:  created,
+		threadId: threadId,
+		message:  message,
 	}
 }
 

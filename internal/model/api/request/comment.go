@@ -7,17 +7,24 @@ import (
 )
 
 type CreateComment struct {
-	Message string
+	Message  string
+	ThreadId string
 }
 
 func ParseComment(r *gin.Context) (*CreateComment, error) {
 	msg := r.PostForm("message")
+	threadId := r.PostForm("threadId")
 
 	if !comment.IsValidMessage(msg) {
 		return nil, errors.New("invalid request message")
 	}
 
+	if threadId == "" {
+		return nil, errors.New("invalid thread id")
+	}
+
 	return &CreateComment{
-		Message: msg,
+		Message:  msg,
+		ThreadId: threadId,
 	}, nil
 }

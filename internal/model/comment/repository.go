@@ -7,9 +7,10 @@ import (
 
 func Save(comment *Comment, db *sql.DB) error {
 	_, err := db.Exec(
-		"INSERT INTO comments (id, created, message) VALUES (?, ?, ?);",
+		"INSERT INTO comments (id, created, threadId, message) VALUES (?, ?, ?, ?);",
 		comment.id,
 		comment.created.Format(time.RFC3339),
+		comment.threadId,
 		comment.message,
 	)
 
@@ -17,7 +18,7 @@ func Save(comment *Comment, db *sql.DB) error {
 }
 
 func GetAll(db *sql.DB) ([]*Comment, error) {
-	rows, err := db.Query("SELECT id, created, message FROM comments ORDER BY created DESC")
+	rows, err := db.Query("SELECT id, created, threadId, message FROM comments ORDER BY created DESC")
 	if err != nil {
 		return nil, err
 	}
@@ -25,8 +26,8 @@ func GetAll(db *sql.DB) ([]*Comment, error) {
 
 	var comments []*Comment
 	for rows.Next() {
-		var id, created, message string
-		if err = rows.Scan(&id, &created, &message); err != nil {
+		var id, created, threadId, message string
+		if err = rows.Scan(&id, &created, &threadId, &message); err != nil {
 			return nil, err
 		}
 
@@ -35,7 +36,7 @@ func GetAll(db *sql.DB) ([]*Comment, error) {
 			return nil, err
 		}
 
-		comment := load(id, t, message)
+		comment := load(id, t, threadId, message)
 
 		comments = append(comments, comment)
 	}
