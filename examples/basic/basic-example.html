@@ -58,7 +58,7 @@
 
         function onFetchButton() {
             getComments(document.getElementById('thread').value).then(data => {
-                document.getElementById('textarea').value = data;
+                document.getElementById('textarea').value = JSON.stringify(data);
             })
         }
 
