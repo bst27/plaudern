@@ -12,6 +12,7 @@ import (
 
 func RegisterRoutes(r *gin.Engine) {
 	r.GET("/ping", func(c *gin.Context) {
+	    // TODO: Check db
 		c.JSON(http.StatusOK, gin.H{
 			"Time": time.Now().Unix(),
 		})
