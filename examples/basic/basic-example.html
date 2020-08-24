@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Basic Example</title>
+    <style>
+        #form > * {
+            display: block;
+            box-sizing: border-box;
+            width: 90%;
+            margin: 1em auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="form">
+        <h1>Basic Example</h1>
+        <input type="text" id="thread" placeholder="Use thread id to group comments ...">
+
+        <hr>
+
+        <input type="text" id="comment" placeholder="Write your comment here ...">
+        <button onclick="onSubmitButton()">Send Comment</button>
+
+        <hr>
+
+        <button onclick="onFetchButton()">Fetch Comments</button>
+        <textarea id="textarea" rows="10"></textarea>
+    </div>
+
+    <script type="text/javascript">
+        document.getElementById('thread').value = window.location.hostname + window.location.port + window.location.pathname;
+
+        async function getComments(threadId) {
+            const url = new URL('http://localhost:8080/comment');
+            url.searchParams.set('threadId', threadId);
+
+            const response = await fetch(url.href, {
+                method: 'GET',
+            });
+            return response.json();
+        }
+
+        async function submitComment(message, threadId) {
+            const url = new URL('http://localhost:8080/comment');
+
+            const form = new FormData();
+            form.set('threadId', threadId);
+            form.set('message', message);
+
+            const response = await fetch(url.href, {
+                method: 'POST',
+                body: form,
+            });
+            return response.json();
+        }
+
+        function onFetchButton() {
+            getComments(document.getElementById('thread').value).then(data => {
+                document.getElementById('textarea').value = data;
+            })
+        }
+
+        function onSubmitButton() {
+            submitComment(document.getElementById("comment").value, document.getElementById('thread').value).then(data => {
+                document.getElementById("comment").value = '';
+            });
+        }
+    </script>
+</body>
+</html>
