@@ -3,6 +3,7 @@ package controller
 import (
 	"github.com/bst27/plaudern/internal/database"
 	"github.com/bst27/plaudern/internal/model/api/request"
+	"github.com/bst27/plaudern/internal/model/api/response"
 	"github.com/bst27/plaudern/internal/model/comment"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -49,6 +50,33 @@ func RegisterRoutes(r *gin.Engine) {
 		}
 
 		ctx.JSON(http.StatusOK, gin.H{})
+	})
+
+	r.GET("/comment", func(ctx *gin.Context) {
+		req, err := request.ParseGetComments(ctx)
+
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"Error": err.Error(),
+			})
+			return
+		}
+
+		db, err := database.Open()
+		if err != nil {
+			log.Println(err)
+			ctx.JSON(http.StatusInternalServerError, gin.H{})
+			return
+		}
+
+		cmnts, err := comment.GetByThread(req.ThreadId, db)
+		if err != nil {
+			log.Println(err)
+			ctx.JSON(http.StatusInternalServerError, gin.H{})
+			return
+		}
+
+		ctx.JSON(http.StatusOK, response.NewGetComments(cmnts))
 	})
 
 	r.GET("/thread/:id", func(c *gin.Context) {

@@ -26,6 +26,15 @@ func New(msg string, threadId string) (*Comment, error) {
 	}, nil
 }
 
+func (r *Comment) GetFrontendData() map[string]interface{} {
+	fd := make(map[string]interface{})
+	fd["Id"] = r.id
+	fd["Created"] = r.created
+	fd["ThreadId"] = r.threadId
+	fd["Message"] = r.message
+	return fd
+}
+
 func load(id string, created time.Time, threadId string, message string) *Comment {
 	return &Comment{
 		id:       id,

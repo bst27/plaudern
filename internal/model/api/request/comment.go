@@ -11,6 +11,10 @@ type CreateComment struct {
 	ThreadId string
 }
 
+type GetComments struct {
+	ThreadId string
+}
+
 func ParseCreateComment(r *gin.Context) (*CreateComment, error) {
 	msg := r.PostForm("message")
 	threadId := r.PostForm("threadId")
@@ -25,6 +29,18 @@ func ParseCreateComment(r *gin.Context) (*CreateComment, error) {
 
 	return &CreateComment{
 		Message:  msg,
+		ThreadId: threadId,
+	}, nil
+}
+
+func ParseGetComments(r *gin.Context) (*GetComments, error) {
+	threadId := r.Query("threadId")
+
+	if threadId == "" {
+		return nil, errors.New("invalid thread id")
+	}
+
+	return &GetComments{
 		ThreadId: threadId,
 	}, nil
 }
