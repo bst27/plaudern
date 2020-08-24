@@ -23,29 +23,7 @@ func GetByThread(threadId string, db *sql.DB) ([]*Comment, error) {
 		return nil, err
 	}
 	defer rows.Close()
-
-	var comments []*Comment
-	for rows.Next() {
-		var id, created, threadId, message string
-		if err = rows.Scan(&id, &created, &threadId, &message); err != nil {
-			return nil, err
-		}
-
-		t, err := time.Parse(time.RFC3339, created)
-		if err != nil {
-			return nil, err
-		}
-
-		comment := load(id, t, threadId, message)
-
-		comments = append(comments, comment)
-	}
-
-	if err = rows.Err(); err != nil {
-		return nil, err
-	}
-
-	return comments, nil
+	return readRows(rows)
 }
 
 func GetAll(db *sql.DB) ([]*Comment, error) {
@@ -54,11 +32,14 @@ func GetAll(db *sql.DB) ([]*Comment, error) {
 		return nil, err
 	}
 	defer rows.Close()
+	return readRows(rows)
+}
 
+func readRows(rows *sql.Rows) ([]*Comment, error) {
 	var comments []*Comment
 	for rows.Next() {
 		var id, created, threadId, message string
-		if err = rows.Scan(&id, &created, &threadId, &message); err != nil {
+		if err := rows.Scan(&id, &created, &threadId, &message); err != nil {
 			return nil, err
 		}
 
@@ -72,13 +53,9 @@ func GetAll(db *sql.DB) ([]*Comment, error) {
 		comments = append(comments, comment)
 	}
 
-	if err = rows.Err(); err != nil {
+	if err := rows.Err(); err != nil {
 		return nil, err
 	}
 
 	return comments, nil
-}
-
-func readRows(rows *sql.Rows) ([]*Comment, error) {
-	return nil, nil
 }
