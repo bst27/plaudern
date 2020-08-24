@@ -13,7 +13,24 @@ import (
 
 func RegisterRoutes(r *gin.Engine) {
 	r.GET("/ping", func(c *gin.Context) {
-	    // TODO: Check db
+		db, err := database.Open()
+
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"Time":  time.Now().Unix(),
+				"Error": "Database not available",
+			})
+			return
+		}
+
+		if err := db.Ping(); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"Time":  time.Now().Unix(),
+				"Error": "Database not available",
+			})
+			return
+		}
+
 		c.JSON(http.StatusOK, gin.H{
 			"Time": time.Now().Unix(),
 		})
