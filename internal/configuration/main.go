@@ -6,12 +6,19 @@ import (
 )
 
 type Config struct {
-	Port int64
+	Port           int64
+	AllowedOrigins []string
 }
 
 func GetDefault() *Config {
+	origins := []string{
+		"http://example.com",
+		"https://example.com/",
+	}
+
 	return &Config{
-		Port: 8080,
+		Port:           8080,
+		AllowedOrigins: origins,
 	}
 }
 

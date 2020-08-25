@@ -23,7 +23,7 @@ var (
 
 			r := gin.Default()
 
-			middleware.Register(r)
+			middleware.Register(r, config)
 			controller.RegisterRoutes(r)
 
 			r.Run(":" + strconv.FormatInt(config.Port, 10))

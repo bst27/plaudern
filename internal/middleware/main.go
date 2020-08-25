@@ -1,15 +1,16 @@
 package middleware
 
 import (
+	"github.com/bst27/plaudern/internal/configuration"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"time"
 )
 
-func Register(r *gin.Engine) {
+func Register(r *gin.Engine, config *configuration.Config) {
 	r.Use(cors.New(cors.Config{
 		AllowAllOrigins:        false,
-		AllowOrigins:           []string{"http://localhost:8083"}, // TODO: Make configurable
+		AllowOrigins:           config.AllowedOrigins,
 		AllowOriginFunc:        nil,
 		AllowMethods:           []string{"GET", "POST"},
 		AllowHeaders:           []string{"*"},

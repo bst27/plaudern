@@ -1,3 +1,7 @@
 {
-  "Port": 8080
+  "Port": 8080,
+  "AllowedOrigins": [
+    "http://example.com",
+    "https://example.com/"
+  ]
 }
