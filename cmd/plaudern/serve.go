@@ -6,6 +6,7 @@ import (
 	"github.com/bst27/plaudern/internal/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
+	"log"
 	"strconv"
 )
 
@@ -15,7 +16,11 @@ var (
 		Short: "Start webserver",
 		Long:  "Start webserver to serve and receive comments.",
 		Run: func(cmd *cobra.Command, args []string) {
-			config := configuration.GetDefault()
+			config, err := configuration.ReadFile(cmd.Flag("config").Value.String())
+			if err != nil {
+				log.Fatalln(err)
+			}
+
 			r := gin.Default()
 
 			middleware.Register(r)
@@ -27,5 +32,11 @@ var (
 )
 
 func init() {
+	serveCmd.Flags().String("config", "plaudern-config.json", "Config file to use")
+	err := serveCmd.MarkFlagRequired("config")
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	rootCmd.AddCommand(serveCmd)
 }
