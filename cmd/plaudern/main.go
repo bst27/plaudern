@@ -1,20 +1,15 @@
 package main
 
 import (
-	"github.com/bst27/plaudern/internal/configuration"
-	"github.com/bst27/plaudern/internal/controller"
-	"github.com/bst27/plaudern/internal/middleware"
-	"github.com/gin-gonic/gin"
-	"log"
-	"strconv"
+	"os"
 )
 
 func main() {
-	config := configuration.GetDefault()
-	r := gin.Default()
+	err := execute()
 
-	middleware.Register(r)
-	controller.RegisterRoutes(r)
+	if err != nil {
+		os.Exit(1)
+	}
 
-	log.Println(r.Run(":" + strconv.FormatInt(config.Port, 10)))
+	os.Exit(0)
 }
