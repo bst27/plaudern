@@ -2,19 +2,22 @@ package database
 
 import (
 	"database/sql"
+	"github.com/bst27/plaudern/internal/configuration"
 	_ "github.com/mattn/go-sqlite3"
+	"log"
 )
 
 var (
 	dbInstance *sql.DB
 )
 
-func Open() (*sql.DB, error) {
+// Use this function to open the database exactly once
+func Open(config *configuration.Config) (*sql.DB, error) {
 	if dbInstance != nil {
-		return dbInstance, nil
+		log.Fatalln("Database already open")
 	}
 
-	db, err := sql.Open("sqlite3", ":memory:") // TODO: Use persistent database
+	db, err := sql.Open("sqlite3", config.DatabaseFile)
 	if err != nil {
 		return nil, err
 	}
@@ -22,7 +25,12 @@ func Open() (*sql.DB, error) {
 	setup(db)
 
 	dbInstance = db
-	return Open()
+	return Get(), nil
+}
+
+// Only use this function after database has successfully been opened with Open()
+func Get() *sql.DB {
+	return dbInstance
 }
 
 func setup(db *sql.DB) error {

@@ -3,5 +3,6 @@
   "AllowedOrigins": [
     "http://example.com",
     "https://example.com/"
-  ]
+  ],
+  "DatabaseFile": "plaudern-data.db"
 }

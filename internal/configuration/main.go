@@ -8,6 +8,7 @@ import (
 type Config struct {
 	Port           int64
 	AllowedOrigins []string
+	DatabaseFile   string
 }
 
 func GetDefault() *Config {
@@ -19,6 +20,7 @@ func GetDefault() *Config {
 	return &Config{
 		Port:           8080,
 		AllowedOrigins: origins,
+		DatabaseFile:   "plaudern-data.db",
 	}
 }
 

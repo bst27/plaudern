@@ -13,15 +13,7 @@ import (
 
 func RegisterRoutes(r *gin.Engine) {
 	r.GET("/ping", func(c *gin.Context) {
-		db, err := database.Open()
-
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
-				"Time":  time.Now().Unix(),
-				"Error": "Database not available",
-			})
-			return
-		}
+		db := database.Get()
 
 		if err := db.Ping(); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
@@ -53,12 +45,7 @@ func RegisterRoutes(r *gin.Engine) {
 			return
 		}
 
-		db, err := database.Open()
-		if err != nil {
-			log.Println(err)
-			ctx.JSON(http.StatusInternalServerError, gin.H{})
-			return
-		}
+		db := database.Get()
 
 		err = comment.Save(cmnt, db)
 		if err != nil {
@@ -80,12 +67,7 @@ func RegisterRoutes(r *gin.Engine) {
 			return
 		}
 
-		db, err := database.Open()
-		if err != nil {
-			log.Println(err)
-			ctx.JSON(http.StatusInternalServerError, gin.H{})
-			return
-		}
+		db := database.Get()
 
 		cmnts, err := comment.GetByThread(req.ThreadId, db)
 		if err != nil {

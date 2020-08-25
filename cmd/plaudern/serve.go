@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/bst27/plaudern/internal/configuration"
 	"github.com/bst27/plaudern/internal/controller"
+	"github.com/bst27/plaudern/internal/database"
 	"github.com/bst27/plaudern/internal/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
@@ -17,6 +18,12 @@ var (
 		Long:  "Start webserver to serve and receive comments.",
 		Run: func(cmd *cobra.Command, args []string) {
 			config, err := configuration.ReadFile(cmd.Flag("config").Value.String())
+			if err != nil {
+				log.Fatalln(err)
+			}
+
+			// Open database at the beginning for initialization; subsequent calls can use database.Get() instead.
+			_, err = database.Open(config)
 			if err != nil {
 				log.Fatalln(err)
 			}
