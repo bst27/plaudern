@@ -6,21 +6,24 @@ import (
 )
 
 type Config struct {
-	Port           int64
-	AllowedOrigins []string
-	DatabaseFile   string
+	Port              int64
+	AllowedOrigins    []string
+	DatabaseFile      string
+	NewCommentWebhook string
 }
 
 func GetDefault() *Config {
 	origins := []string{
 		"http://example.com",
 		"https://example.com/",
+		"http://localhost:8083",
 	}
 
 	return &Config{
-		Port:           8080,
-		AllowedOrigins: origins,
-		DatabaseFile:   "plaudern-data.db",
+		Port:              8080,
+		AllowedOrigins:    origins,
+		DatabaseFile:      "plaudern-data.db",
+		NewCommentWebhook: "",
 	}
 }
 

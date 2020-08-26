@@ -1,17 +1,19 @@
 package controller
 
 import (
+	"github.com/bst27/plaudern/internal/configuration"
 	"github.com/bst27/plaudern/internal/database"
 	"github.com/bst27/plaudern/internal/model/api/request"
 	"github.com/bst27/plaudern/internal/model/api/response"
 	"github.com/bst27/plaudern/internal/model/comment"
+	"github.com/bst27/plaudern/internal/webhook"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"time"
 )
 
-func RegisterRoutes(r *gin.Engine) {
+func RegisterRoutes(r *gin.Engine, config *configuration.Config) {
 	r.GET("/ping", func(c *gin.Context) {
 		db := database.Get()
 
@@ -52,6 +54,20 @@ func RegisterRoutes(r *gin.Engine) {
 			log.Println(err)
 			ctx.JSON(http.StatusInternalServerError, gin.H{})
 			return
+		}
+
+		if config.NewCommentWebhook != "" {
+			go func() {
+				err := webhook.New().Receive(config.NewCommentWebhook, gin.H{
+					"Author":   req.Author,
+					"ThreadId": req.ThreadId,
+					"Message":  req.Message,
+				})
+
+				if err != nil {
+					log.Println(err)
+				}
+			}()
 		}
 
 		ctx.JSON(http.StatusOK, gin.H{})
