@@ -7,6 +7,7 @@ import (
 )
 
 type CreateComment struct {
+	Author   string
 	Message  string
 	ThreadId string
 }
@@ -16,6 +17,7 @@ type GetComments struct {
 }
 
 func ParseCreateComment(r *gin.Context) (*CreateComment, error) {
+	author := r.PostForm("author")
 	msg := r.PostForm("message")
 	threadId := r.PostForm("threadId")
 
@@ -28,6 +30,7 @@ func ParseCreateComment(r *gin.Context) (*CreateComment, error) {
 	}
 
 	return &CreateComment{
+		Author:   author,
 		Message:  msg,
 		ThreadId: threadId,
 	}, nil

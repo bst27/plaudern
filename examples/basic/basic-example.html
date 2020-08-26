@@ -20,6 +20,7 @@
 
         <hr>
 
+        <input type="text" id="author" placeholder="Write your name here ...">
         <input type="text" id="comment" placeholder="Write your comment here ...">
         <button onclick="onSubmitButton()">Send Comment</button>
 
@@ -42,10 +43,11 @@
             return response.json();
         }
 
-        async function submitComment(message, threadId) {
+        async function submitComment(author, message, threadId) {
             const url = new URL('http://localhost:8080/comment');
 
             const form = new FormData();
+            form.set('author', author);
             form.set('threadId', threadId);
             form.set('message', message);
 
@@ -63,7 +65,12 @@
         }
 
         function onSubmitButton() {
-            submitComment(document.getElementById("comment").value, document.getElementById('thread').value).then(data => {
+            submitComment(
+                document.getElementById("author").value,
+                document.getElementById("comment").value,
+                document.getElementById('thread').value
+            ).then(data => {
+                document.getElementById("author").value = '';
                 document.getElementById("comment").value = '';
             });
         }

@@ -38,7 +38,7 @@ func RegisterRoutes(r *gin.Engine) {
 			return
 		}
 
-		cmnt, err := comment.New(req.Message, req.ThreadId)
+		cmnt, err := comment.New(req.Message, req.ThreadId, req.Author)
 		if err != nil {
 			log.Println(err)
 			ctx.JSON(http.StatusInternalServerError, gin.H{})
