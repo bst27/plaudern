@@ -31,13 +31,15 @@
     </div>
 
     <script type="text/javascript">
+        const PLAUDERN_BACKEND = 'http://localhost:8080';
+
         // You can use any string you want as a thread id. Using the URL of a page is a good idea because the URL
         // already uniquely identifies the content. But if you want to have the same comment section on different
         // pages there is nothing stopping you from using the same thread id on multiple pages.
         document.getElementById('thread').value = window.location.hostname + window.location.port + window.location.pathname;
 
         async function getComments(threadId) {
-            const url = new URL('http://localhost:8080/comment');
+            const url = new URL(PLAUDERN_BACKEND + '/comment');
             url.searchParams.set('threadId', threadId);
 
             const response = await fetch(url.href, {
@@ -47,7 +49,7 @@
         }
 
         async function submitComment(author, message, threadId) {
-            const url = new URL('http://localhost:8080/comment');
+            const url = new URL(PLAUDERN_BACKEND + '/comment');
 
             const form = new FormData();
             form.set('author', author);
