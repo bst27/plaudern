@@ -1,3 +1,5 @@
+![plaudern](https://raw.githubusercontent.com/bst27/plaudern/master/website/banner.png)
+
 # This project is work in progress
 
 # About
