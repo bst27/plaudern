@@ -10,10 +10,19 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
 	"time"
 )
 
 func RegisterRoutes(r *gin.Engine, config *configuration.Config) {
+	execFile, err := os.Executable()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	r.Static("/manage", filepath.Join(filepath.Dir(execFile), "web"))
+
 	r.GET("/ping", func(c *gin.Context) {
 		db := database.Get()
 
