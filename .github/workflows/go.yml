@@ -19,6 +19,12 @@ jobs:
         go-version: ^1.15
       id: go
 
+    - name: Set up Angular
+      uses: actions/setup-node@v1
+      with:
+        node-version: '13.14.0'
+    - run: npm install -g @angular/cli@10.0.8
+
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
 
