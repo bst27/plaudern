@@ -32,6 +32,7 @@ env GOOS=windows GOARCH=amd64 go build -v -o "bin/windows-amd64" "$DIR/cmd/plaud
 
 # Build Angular project
 cd "web"
+npm install
 ng build --prod --base-href "/manage/"
 
 # Copy Angular dist files
