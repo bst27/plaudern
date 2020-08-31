@@ -18,7 +18,7 @@ export class CommentsComponent implements OnInit {
   ngOnInit(): void {
     this.commentsService.getComments().subscribe(data => {
       this.comments = data.sort((a, b) => {
-        console.log(Date.parse(a.Created), Date.parse(b.Created));
+
         if (Date.parse(a.Created) < Date.parse(b.Created)) {
           return -1;
         }
