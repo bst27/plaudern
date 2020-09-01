@@ -1,30 +1,22 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from "rxjs";
 import {Comment} from "../models/comment";
+import {HttpClient} from "@angular/common/http";
+import {map} from "rxjs/operators";
+import {CommentResponse} from "../models/comment-response";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentsService {
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   getComments(): Observable<Comment[]> {
-    return of([
-      {
-        Author: 'John',
-        Created: '2020-08-31T21:54:21+02:00',
-        Id: 'ba2d2e6a-2299-40fb-94d7-2738a76333c4',
-        Message: 'Hi <br>there',
-        ThreadId: 'localhost8083/basic/basic-example.html',
-      },
-      {
-        Author: 'Max',
-        Created: '2020-08-31T21:57:21+02:00',
-        Id: '11111-2299-40fb-94d7-2732222223c4',
-        Message: 'Thanks John!',
-        ThreadId: 'localhost8083/basic/basic-example.html',
-      },
-    ]);
+    return this.http.get<CommentResponse>(
+      '/manage/comment'
+    ).pipe(map(resp => resp.Comments));
   }
 }
