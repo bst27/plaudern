@@ -14,5 +14,6 @@ func registerManageRoutes(r *gin.Engine, config *configuration.Config) {
 		log.Fatalln(err)
 	}
 
-	r.Static("/manage", filepath.Join(filepath.Dir(execFile), "web"))
+	manage := r.Group("/manage")
+	manage.Static("/app", filepath.Join(filepath.Dir(execFile), "web"))
 }
