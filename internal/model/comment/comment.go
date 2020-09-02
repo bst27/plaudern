@@ -3,6 +3,7 @@ package comment
 import (
 	"errors"
 	"github.com/google/uuid"
+	"github.com/microcosm-cc/bluemonday"
 	"time"
 )
 
@@ -28,12 +29,16 @@ func New(msg string, threadId string, author string) (*Comment, error) {
 	}, nil
 }
 
-func (r *Comment) GetFrontendData() map[string]interface{} {
+func (r *Comment) GetFrontendData(policy *bluemonday.Policy) map[string]interface{} {
+	// When changing the response make sure to also update the corresponding typescript interface:
+	// web/src/app/models/comment.ts
+
 	fd := make(map[string]interface{})
 	fd["Id"] = r.id
 	fd["Created"] = r.created
 	fd["ThreadId"] = r.threadId
-	fd["Message"] = r.message
+	fd["Message"] = policy.Sanitize(r.message)
+	fd["MessageInsecure"] = r.message
 	fd["Author"] = r.author
 	return fd
 }

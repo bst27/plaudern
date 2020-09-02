@@ -6,13 +6,14 @@ import (
 	"github.com/bst27/plaudern/internal/model/api/response"
 	"github.com/bst27/plaudern/internal/model/comment"
 	"github.com/gin-gonic/gin"
+	"github.com/microcosm-cc/bluemonday"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 )
 
-func registerManageRoutes(r *gin.Engine, config *configuration.Config) {
+func registerManageRoutes(r *gin.Engine, config *configuration.Config, policy *bluemonday.Policy) {
 	execFile, err := os.Executable()
 	if err != nil {
 		log.Fatalln(err)
@@ -31,6 +32,6 @@ func registerManageRoutes(r *gin.Engine, config *configuration.Config) {
 			return
 		}
 
-		ctx.JSON(http.StatusOK, response.NewGetComments(cmnts))
+		ctx.JSON(http.StatusOK, response.NewGetComments(cmnts, policy))
 	})
 }

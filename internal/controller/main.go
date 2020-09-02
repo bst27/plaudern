@@ -8,13 +8,16 @@ import (
 	"github.com/bst27/plaudern/internal/model/comment"
 	"github.com/bst27/plaudern/internal/webhook"
 	"github.com/gin-gonic/gin"
+	"github.com/microcosm-cc/bluemonday"
 	"log"
 	"net/http"
 	"time"
 )
 
 func RegisterRoutes(r *gin.Engine, config *configuration.Config) {
-	registerManageRoutes(r, config)
+	policy := bluemonday.StrictPolicy()
+
+	registerManageRoutes(r, config, policy)
 
 	r.GET("/ping", func(c *gin.Context) {
 		db := database.Get()
@@ -94,7 +97,7 @@ func RegisterRoutes(r *gin.Engine, config *configuration.Config) {
 			return
 		}
 
-		ctx.JSON(http.StatusOK, response.NewGetComments(cmnts))
+		ctx.JSON(http.StatusOK, response.NewGetComments(cmnts, policy))
 	})
 
 	r.GET("/thread/:id", func(c *gin.Context) {

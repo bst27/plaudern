@@ -4,5 +4,6 @@ export interface Comment {
   Created: string;
   Id: string;
   Message: string;
+  MessageInsecure: string;
   ThreadId: string;
 }
