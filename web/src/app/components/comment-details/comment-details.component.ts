@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {CommentsService} from "../../services/comments.service";
 import {Comment} from "../../models/comment";
-import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-comment-details',

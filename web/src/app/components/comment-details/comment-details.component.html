@@ -1,6 +1,6 @@
 <div>
   <h1>Comment Details</h1>
-  <div class="card">
+  <div *ngIf="comment" class="card">
     <div class="thread" title="{{comment.ThreadId}}">{{comment.ThreadId}}</div>
     <div class="author-message">
       <span class="author">{{comment.Author}}: </span>

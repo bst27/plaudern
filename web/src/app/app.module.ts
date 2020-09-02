@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { CommentsComponent } from './components/comments/comments.component';
 import { HttpClientModule } from "@angular/common/http";
+import {CommentDetailsComponent} from "./components/comment-details/comment-details.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     CommentComponent,
-    CommentsComponent
+    CommentsComponent,
+    CommentDetailsComponent
   ],
   imports: [
     BrowserModule,
