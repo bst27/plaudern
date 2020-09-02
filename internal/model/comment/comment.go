@@ -36,7 +36,8 @@ func (r *Comment) GetFrontendData(policy *bluemonday.Policy) map[string]interfac
 	fd := make(map[string]interface{})
 	fd["Id"] = r.id
 	fd["Created"] = r.created
-	fd["ThreadId"] = r.threadId
+	fd["ThreadId"] = policy.Sanitize(r.threadId)
+	fd["ThreadIdInsecure"] = r.threadId
 	fd["Message"] = policy.Sanitize(r.message)
 	fd["MessageInsecure"] = r.message
 	fd["Author"] = r.author

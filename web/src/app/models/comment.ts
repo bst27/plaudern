@@ -6,4 +6,5 @@ export interface Comment {
   Message: string;
   MessageInsecure: string;
   ThreadId: string;
+  ThreadIdInsecure: string;
 }
