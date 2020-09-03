@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Comment} from "../../models/comment";
 import {ActivatedRoute} from "@angular/router";
 import {CommentsService} from "../../services/comments.service";
-import {Comment} from "../../models/comment";
 
 @Component({
-  selector: 'app-comment-details',
-  templateUrl: './comment-details.component.html',
-  styleUrls: ['./comment-details.component.css']
+  selector: 'app-comment-details-card',
+  templateUrl: './comment-details-card.component.html',
+  styleUrls: ['./comment-details-card.component.css']
 })
-export class CommentDetailsComponent implements OnInit {
+export class CommentDetailsCardComponent implements OnInit {
 
-  comment: Comment;
+  @Input() comment: Comment
 
   constructor(
     private route: ActivatedRoute,
@@ -25,6 +25,14 @@ export class CommentDetailsComponent implements OnInit {
         });
       }
     })
+  }
+
+  onPrimary() {
+    console.log('!');
+  }
+
+  onSecondary() {
+    console.log('?');
   }
 
 }

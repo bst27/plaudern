@@ -1,0 +1,13 @@
+<div *ngIf="comment">
+  <mat-card>
+    <mat-card-subtitle class="thread">{{comment.ThreadId}}</mat-card-subtitle>
+    <mat-card-title class="author">{{comment.Author}}:</mat-card-title>
+    <mat-card-content>
+      <p class="message">{{comment.Message}}</p>
+    </mat-card-content>
+    <mat-card-actions style="display: flex; justify-content: space-between;">
+      <button mat-stroked-button color="primary" (click)="onPrimary()">Approve</button>
+      <button mat-stroked-button color="accent" (click)="onSecondary()">Edit</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

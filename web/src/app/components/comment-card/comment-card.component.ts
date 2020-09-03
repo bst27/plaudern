@@ -1,13 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { Comment } from "../../models/comment";
+import {Comment} from "../../models/comment";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-comment',
-  templateUrl: './comment.component.html',
-  styleUrls: ['./comment.component.css']
+  selector: 'app-comment-card',
+  templateUrl: './comment-card.component.html',
+  styleUrls: ['./comment-card.component.css']
 })
-export class CommentComponent implements OnInit {
+export class CommentCardComponent implements OnInit {
 
   @Input() comment: Comment
 
@@ -18,7 +18,13 @@ export class CommentComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onClick() {
+  onPrimary() {
+
+  }
+
+  onSecondary() {
     this.router.navigate(['/comment', this.comment.Id], );
   }
+
+
 }

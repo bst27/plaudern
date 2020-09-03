@@ -3,24 +3,40 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CommentComponent } from './components/comment/comment.component';
 import { CommentsComponent } from './components/comments/comments.component';
 import { HttpClientModule } from "@angular/common/http";
-import {CommentDetailsComponent} from "./components/comment-details/comment-details.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { CommentCardComponent } from './components/comment-card/comment-card.component';
+import {MatCardModule} from "@angular/material/card";
+import { CommentDetailsCardComponent } from './components/comment-details-card/comment-details-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CommentComponent,
     CommentsComponent,
-    CommentDetailsComponent
+    NavigationComponent,
+    CommentCardComponent,
+    CommentDetailsCardComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
