@@ -7,6 +7,7 @@ import { CommentComponent } from './components/comment/comment.component';
 import { CommentsComponent } from './components/comments/comments.component';
 import { HttpClientModule } from "@angular/common/http";
 import {CommentDetailsComponent} from "./components/comment-details/comment-details.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {CommentDetailsComponent} from "./components/comment-details/comment-deta
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
