@@ -40,7 +40,8 @@ func setup(db *sql.DB) error {
 			created TEXT NOT NULL,
 			threadId TEXT NOT NULL,
 			message TEXT NOT NULL,
-			author TEXT NOT NULL
+			author TEXT NOT NULL,
+			status TEXT NOT NULL
 		);
 	`
 	_, err := db.Exec(sqlStmt)

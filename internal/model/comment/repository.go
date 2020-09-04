@@ -7,19 +7,20 @@ import (
 
 func Save(comment *Comment, db *sql.DB) error {
 	_, err := db.Exec(
-		"INSERT INTO comments (id, created, threadId, message, author) VALUES (?, ?, ?, ?, ?);",
+		"INSERT INTO comments (id, created, threadId, message, author, status) VALUES (?, ?, ?, ?, ?, ?);",
 		comment.id,
 		comment.created.Format(time.RFC3339),
 		comment.threadId,
 		comment.message,
 		comment.author,
+		comment.status,
 	)
 
 	return err
 }
 
 func GetByThread(threadId string, db *sql.DB) ([]*Comment, error) {
-	rows, err := db.Query("SELECT id, created, threadId, message, author FROM comments WHERE threadId = ? ORDER BY created DESC", threadId)
+	rows, err := db.Query("SELECT id, created, threadId, message, author, status FROM comments WHERE threadId = ? ORDER BY created DESC", threadId)
 	if err != nil {
 		return nil, err
 	}
@@ -28,7 +29,7 @@ func GetByThread(threadId string, db *sql.DB) ([]*Comment, error) {
 }
 
 func GetAll(db *sql.DB) ([]*Comment, error) {
-	rows, err := db.Query("SELECT id, created, threadId, message, author FROM comments ORDER BY created DESC")
+	rows, err := db.Query("SELECT id, created, threadId, message, author, status FROM comments ORDER BY created DESC")
 	if err != nil {
 		return nil, err
 	}
@@ -39,8 +40,8 @@ func GetAll(db *sql.DB) ([]*Comment, error) {
 func readRows(rows *sql.Rows) ([]*Comment, error) {
 	var comments []*Comment
 	for rows.Next() {
-		var id, created, threadId, message, author string
-		if err := rows.Scan(&id, &created, &threadId, &message, &author); err != nil {
+		var id, created, threadId, message, author, status string
+		if err := rows.Scan(&id, &created, &threadId, &message, &author, &status); err != nil {
 			return nil, err
 		}
 
@@ -49,7 +50,7 @@ func readRows(rows *sql.Rows) ([]*Comment, error) {
 			return nil, err
 		}
 
-		comment := load(id, t, threadId, message, author)
+		comment := load(id, t, threadId, message, author, status)
 
 		comments = append(comments, comment)
 	}
