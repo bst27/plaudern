@@ -17,6 +17,7 @@ import { CommentCardComponent } from './components/comment-card/comment-card.com
 import {MatCardModule} from "@angular/material/card";
 import { CommentDetailsCardComponent } from './components/comment-details-card/comment-details-card.component';
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { StoreModule } from '@ngrx/store';
     MatIconModule,
     MatListModule,
     MatCardModule,
-    StoreModule.forRoot({}, {})
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([])
   ],
   providers: [],
   bootstrap: [AppComponent]
