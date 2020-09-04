@@ -23,7 +23,7 @@ export class CommentCardComponent implements OnInit {
   }
 
   onSecondary() {
-    this.router.navigate(['/comment', this.comment.Id], );
+    this.router.navigate(['/comments', this.comment.Id], );
   }
 
 
