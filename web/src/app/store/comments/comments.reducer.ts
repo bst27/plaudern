@@ -13,11 +13,9 @@ export const initState: CommentsState = {
 const reducer = createReducer(
   initState,
   on(primaryButtonClicked, (state, props) => {
-    console.log('Primary button clicked for ' + props.comment.Id);
     return state;
   }),
   on(secondaryButtonClicked,  (state, props) => {
-    console.log('Secondary button clicked for ' + props.comment.Id);
     return state;
   }),
   on(commentsLoadedSuccess, (state, props) => {

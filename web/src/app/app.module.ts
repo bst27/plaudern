@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {isDevMode, NgModule} from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +20,7 @@ import { StoreModule } from '@ngrx/store';
 import {commentsReducer} from "./store/comments/comments.reducer";
 import { EffectsModule } from '@ngrx/effects';
 import {CommentsEffects} from "./store/comments/comments.effects";
+import {logger} from "./store/dev/logger.reducer";
 
 @NgModule({
   declarations: [
@@ -43,7 +44,11 @@ import {CommentsEffects} from "./store/comments/comments.effects";
     MatCardModule,
     StoreModule.forRoot({
       comments: commentsReducer,
-    }, {}),
+    }, {
+      metaReducers: isDevMode() ? [
+        logger,
+      ] : []
+    }),
     EffectsModule.forRoot([
       CommentsEffects,
     ])
