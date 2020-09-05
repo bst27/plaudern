@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Comment } from "../../models/comment";
-import {CommentsService} from "../../services/comments.service";
+import {select, Store} from "@ngrx/store";
+import {Observable} from "rxjs";
+import {loadComments} from "../../store/comments/comments.actions";
+import {State} from "../../store/state";
 
 @Component({
   selector: 'app-comments',
@@ -9,27 +12,17 @@ import {CommentsService} from "../../services/comments.service";
 })
 export class CommentsComponent implements OnInit {
 
-  comments: Comment[] = [];
+  comments$: Observable<Comment[]>;
 
   constructor(
-    private commentsService: CommentsService
-  ) { }
+    private store: Store<State>,
+  ) {
+    this.comments$ = store.pipe(select(state => state.comments.comments));
+  }
 
   ngOnInit(): void {
-    this.commentsService.getComments().subscribe(data => {
-      this.comments = data.sort((a, b) => {
-
-        if (Date.parse(a.Created) < Date.parse(b.Created)) {
-          return -1;
-        }
-
-        if (Date.parse(a.Created) > Date.parse(b.Created)) {
-          return 1;
-        }
-
-        return 0;
-      }).reverse();
-    });
+    this.store.dispatch(loadComments());
+    // TODO: Sort comments (newest first)
   }
 
 }

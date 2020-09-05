@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Comment} from "../../models/comment";
-import {Router} from "@angular/router";
+import {primaryButtonClicked, secondaryButtonClicked} from "../../store/comments/comments.actions";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-comment-card',
@@ -12,18 +13,18 @@ export class CommentCardComponent implements OnInit {
   @Input() comment: Comment
 
   constructor(
-    private router: Router
-  ) { }
+    private store: Store
+  ) {}
 
   ngOnInit(): void {
   }
 
   onPrimary() {
-
+    this.store.dispatch(primaryButtonClicked({ comment: this.comment }));
   }
 
   onSecondary() {
-    this.router.navigate(['/comments', this.comment.Id], );
+    this.store.dispatch(secondaryButtonClicked({ comment: this.comment }));
   }
 
 

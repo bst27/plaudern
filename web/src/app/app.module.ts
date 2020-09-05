@@ -17,7 +17,9 @@ import { CommentCardComponent } from './components/comment-card/comment-card.com
 import {MatCardModule} from "@angular/material/card";
 import { CommentDetailsCardComponent } from './components/comment-details-card/comment-details-card.component';
 import { StoreModule } from '@ngrx/store';
+import {commentsReducer} from "./store/comments/comments.reducer";
 import { EffectsModule } from '@ngrx/effects';
+import {CommentsEffects} from "./store/comments/comments.effects";
 
 @NgModule({
   declarations: [
@@ -39,8 +41,12 @@ import { EffectsModule } from '@ngrx/effects';
     MatIconModule,
     MatListModule,
     MatCardModule,
-    StoreModule.forRoot({}, {}),
-    EffectsModule.forRoot([])
+    StoreModule.forRoot({
+      comments: commentsReducer,
+    }, {}),
+    EffectsModule.forRoot([
+      CommentsEffects,
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

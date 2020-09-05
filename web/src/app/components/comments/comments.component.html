@@ -1,5 +1,5 @@
 <div>
-  <div *ngFor="let comment of comments">
+  <div *ngFor="let comment of comments$ | async">
     <app-comment-card [comment]="comment"></app-comment-card>
   </div>
 </div>
