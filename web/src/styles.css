@@ -48,3 +48,7 @@ app-comment-details-card
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+mat-card-actions button {
+  text-transform: uppercase;
+}
