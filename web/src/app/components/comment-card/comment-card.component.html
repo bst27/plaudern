@@ -5,7 +5,7 @@
     <p class="message">{{comment.Message}}</p>
   </mat-card-content>
   <mat-card-actions style="display: flex; justify-content: space-between;">
-    <button mat-stroked-button color="primary" (click)="onPrimary()">Approve</button>
-    <button mat-stroked-button color="accent" (click)="onSecondary()">Edit</button>
+    <button mat-stroked-button color="primary" (click)="onPrimary()" [ngClass]="primaryBtnClassList">{{primaryBtnText()}}</button>
+    <button mat-stroked-button color="accent" (click)="onSecondary()" [ngClass]="secondaryBtnClassList">{{secondaryButtonText()}}</button>
   </mat-card-actions>
 </mat-card>

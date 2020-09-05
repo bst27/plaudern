@@ -21,6 +21,39 @@ export class CommentCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  primaryBtnText(): string {
+    switch (this.comment.Status) {
+      case 'created': return 'Approve';
+      case 'published': return 'Revoke';
+      case 'deleted': return '';// hide button
+      default: console.error('Handle me'); return '';
+    }
+  }
+
+  secondaryButtonText(): string {
+    return 'Edit';
+  }
+
+  showPrimaryBtn(): boolean {
+    return this.primaryBtnText() !== '';
+  }
+
+  showSecondaryBtn(): boolean {
+    return true;
+  }
+
+  get primaryBtnClassList(): object {
+    return {
+      'hidden': !this.showPrimaryBtn(),
+    };
+  }
+
+  get secondaryBtnClassList(): object {
+    return {
+      'hidden': !this.showSecondaryBtn(),
+    };
+  }
+
   onPrimary() {
     this.store.dispatch(primaryButtonClicked({ comment: this.comment }));
   }

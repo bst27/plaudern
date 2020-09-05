@@ -8,4 +8,5 @@ export interface Comment {
   MessageInsecure: string;
   ThreadId: string;
   ThreadIdInsecure: string;
+  Status: string;
 }
