@@ -21,6 +21,7 @@ import {commentsReducer} from "./store/comments/comments.reducer";
 import { EffectsModule } from '@ngrx/effects';
 import {CommentsEffects} from "./store/comments/comments.effects";
 import {logger} from "./store/dev/logger.reducer";
+import {environment} from "../environments/environment";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,7 @@ import {logger} from "./store/dev/logger.reducer";
     StoreModule.forRoot({
       comments: commentsReducer,
     }, {
-      metaReducers: true || isDevMode() ? [// TODO: We cannot run in prod mode with this check here because it errors
+      metaReducers: !environment.production ? [
         logger,
       ] : []
     }),
