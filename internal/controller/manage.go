@@ -37,7 +37,7 @@ func registerManageRoutes(r *gin.Engine, config *configuration.Config, policy *b
 			return
 		}
 
-		ctx.JSON(http.StatusOK, response.NewGetComments(cmnts, policy))
+		ctx.JSON(http.StatusOK, response.NewGetComments(cmnts, policy, true))
 	})
 
 	manage.PUT("/comment/:commentId", func(ctx *gin.Context) {
@@ -84,6 +84,6 @@ func registerManageRoutes(r *gin.Engine, config *configuration.Config, policy *b
 			return
 		}
 
-		ctx.JSON(http.StatusOK, response.NewPutComment(cmnt, policy))
+		ctx.JSON(http.StatusOK, response.NewPutComment(cmnt, policy, true))
 	})
 }

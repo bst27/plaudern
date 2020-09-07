@@ -13,19 +13,27 @@ type PutComment struct {
 	Comment interface{}
 }
 
-func NewGetComments(comments []*comment.Comment, policy *bluemonday.Policy) *GetComments {
+func NewGetComments(
+	comments []*comment.Comment,
+	policy *bluemonday.Policy,
+	asAdmin bool,
+) *GetComments {
 	gc := &GetComments{}
 	gc.Comments = make([]map[string]interface{}, 0)
 
 	for _, cmnt := range comments {
-		gc.Comments = append(gc.Comments, cmnt.GetFrontendData(policy))
+		gc.Comments = append(gc.Comments, cmnt.GetFrontendData(policy, asAdmin))
 	}
 
 	return gc
 }
 
-func NewPutComment(cmnt *comment.Comment, policy *bluemonday.Policy) *PutComment {
+func NewPutComment(
+	cmnt *comment.Comment,
+	policy *bluemonday.Policy,
+	asAdmin bool,
+) *PutComment {
 	return &PutComment{
-		Comment: cmnt.GetFrontendData(policy),
+		Comment: cmnt.GetFrontendData(policy, asAdmin),
 	}
 }

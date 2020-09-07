@@ -37,7 +37,7 @@ func New(msg string, threadId string, author string) (*Comment, error) {
 	}, nil
 }
 
-func (r *Comment) GetFrontendData(policy *bluemonday.Policy) map[string]interface{} {
+func (r *Comment) GetFrontendData(policy *bluemonday.Policy, asAdmin bool) map[string]interface{} {
 	// When changing the response make sure to also update the corresponding typescript interface:
 	// web/src/app/models/comment.ts
 
@@ -46,11 +46,19 @@ func (r *Comment) GetFrontendData(policy *bluemonday.Policy) map[string]interfac
 	fd["Created"] = r.created
 	fd["ThreadId"] = policy.Sanitize(r.threadId)
 	fd["ThreadIdInsecure"] = r.threadId
-	fd["Message"] = policy.Sanitize(r.message)
-	fd["MessageInsecure"] = r.message
-	fd["Author"] = policy.Sanitize(r.author)
-	fd["AuthorInsecure"] = r.author
 	fd["Status"] = r.status
+	fd["Message"] = ""
+	fd["MessageInsecure"] = ""
+	fd["Author"] = ""
+	fd["AuthorInsecure"] = ""
+
+	if r.status == STATUS_PUBLISHED || asAdmin {
+		fd["Message"] = policy.Sanitize(r.message)
+		fd["MessageInsecure"] = r.message
+		fd["Author"] = policy.Sanitize(r.author)
+		fd["AuthorInsecure"] = r.author
+	}
+
 	return fd
 }
 

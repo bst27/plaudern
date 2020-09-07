@@ -93,7 +93,7 @@ func registerPublicRoutes(r *gin.Engine, config *configuration.Config, policy *b
 			return
 		}
 
-		ctx.JSON(http.StatusOK, response.NewGetComments(cmnts, policy))
+		ctx.JSON(http.StatusOK, response.NewGetComments(cmnts, policy, false))
 	})
 
 	r.GET("/thread/:id", func(c *gin.Context) {
