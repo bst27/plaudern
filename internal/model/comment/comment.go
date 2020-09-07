@@ -54,6 +54,32 @@ func (r *Comment) GetFrontendData(policy *bluemonday.Policy) map[string]interfac
 	return fd
 }
 
+func (r *Comment) Approve() error {
+	switch r.status {
+	case STATUS_CREATED:
+		r.status = STATUS_PUBLISHED
+		return nil
+	case STATUS_PUBLISHED:
+		// nothing to do
+		return nil
+	default:
+		return errors.New("invalid status change")
+	}
+}
+
+func (r *Comment) Revoke() error {
+	switch r.status {
+	case STATUS_CREATED:
+		// nothing to do
+		return nil
+	case STATUS_PUBLISHED:
+		r.status = STATUS_CREATED
+		return nil
+	default:
+		return errors.New("invalid status change")
+	}
+}
+
 func load(id string, created time.Time, threadId string, message string, author string, status string) *Comment {
 	return &Comment{
 		id:       id,

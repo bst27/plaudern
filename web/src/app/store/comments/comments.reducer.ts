@@ -1,5 +1,11 @@
 import { createReducer, on } from "@ngrx/store";
-import {commentsLoadedSuccess, primaryButtonClicked, secondaryButtonClicked} from "./comments.actions";
+import {
+  commentApproved,
+  commentRevoked,
+  commentsLoadedSuccess,
+  primaryButtonClicked,
+  secondaryButtonClicked
+} from "./comments.actions";
 import {Comment} from "../../models/comment";
 
 export type CommentsState = {
@@ -20,7 +26,16 @@ const reducer = createReducer(
   }),
   on(commentsLoadedSuccess, (state, props) => {
     return {...state, comments: props.comments};
-  })
+  }),
+  on(commentApproved, commentRevoked, (state, props) => {
+    return {...state, comments: state.comments.map(comment => {
+      if (comment.Id === props.comment.Id) {
+        comment = props.comment;
+      }
+
+      return comment;
+    })};
+  }),
 );
 
 export function commentsReducer(state, action) {

@@ -1,7 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Comment} from "../../models/comment";
 import {ActivatedRoute} from "@angular/router";
-import {CommentsService} from "../../services/comments.service";
+import {select, Store} from "@ngrx/store";
+import {State} from "../../store/state";
+import {loadComment} from "../../store/comments/comments.actions";
 
 @Component({
   selector: 'app-comment-details-card',
@@ -10,29 +12,25 @@ import {CommentsService} from "../../services/comments.service";
 })
 export class CommentDetailsCardComponent implements OnInit {
 
-  @Input() comment: Comment
+  comment: Comment;
 
   constructor(
     private route: ActivatedRoute,
-    private commentsService: CommentsService
+    private store: Store<State>,
   ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       if (params.has('commentId')) {
-        this.commentsService.getComments().subscribe(comments => {
-          this.comment = comments.find(comment => comment.Id === params.get('commentId'))
-        });
+        this.store.dispatch(loadComment({ commentId: params.get('commentId') }));
+
+        this.store.pipe(select((state) => {
+          return state.comments.comments.find(comment => comment.Id === params.get('commentId'));
+        })).subscribe(comment => {
+          this.comment = comment;
+        })
       }
     })
-  }
-
-  onPrimary() {
-    console.log('!');
-  }
-
-  onSecondary() {
-    console.log('?');
   }
 
 }

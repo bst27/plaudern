@@ -9,6 +9,10 @@ type GetComments struct {
 	Comments []map[string]interface{}
 }
 
+type PutComment struct {
+	Comment interface{}
+}
+
 func NewGetComments(comments []*comment.Comment, policy *bluemonday.Policy) *GetComments {
 	gc := &GetComments{}
 	gc.Comments = make([]map[string]interface{}, 0)
@@ -18,4 +22,10 @@ func NewGetComments(comments []*comment.Comment, policy *bluemonday.Policy) *Get
 	}
 
 	return gc
+}
+
+func NewPutComment(cmnt *comment.Comment, policy *bluemonday.Policy) *PutComment {
+	return &PutComment{
+		Comment: cmnt.GetFrontendData(policy),
+	}
 }
