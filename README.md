@@ -2,7 +2,7 @@
 
 # This project is work in progress
 ## TODOS
-* As an admin I want to approve comments
+* As an admin I want to approve comments [x]
 * As an admin I want to change comment messages
 * As an admin I want to change comment authors
 * As an admin I want to change comment thread IDs
