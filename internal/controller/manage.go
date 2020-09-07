@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func registerManageRoutes(r *gin.Engine, config *configuration.Config, policy *bluemonday.Policy) {
@@ -22,10 +23,17 @@ func registerManageRoutes(r *gin.Engine, config *configuration.Config, policy *b
 
 	manage := r.Group("/manage")
 
-	// TODO: Redirect URLs to allow Angular router to handle the  routing.
-	// Otherwise calling URLs like this http://localhost:8080/manage/app/comments/2deac5b6-73ef-4fa6-b207-6fc5370e1e40
-	// directly will not work because the server searches  for the file and cannot find it.
 	manage.Static("/app", filepath.Join(filepath.Dir(execFile), "web"))
+
+	r.NoRoute(func(ctx *gin.Context) {
+		// Redirect URLs to allow Angular router to handle the routing. Otherwise calling URLs
+		// like this http://localhost:8080/manage/app/comments/2deac5b6-73ef-4fa6-b207-6fc5370e1e40
+		// directly will not work because the server searches for the file and cannot find it.
+
+		if strings.HasPrefix(ctx.Request.URL.Path, "/manage/app/") {
+			ctx.File(filepath.Join(filepath.Dir(execFile), "web", "index.html"))
+		}
+	})
 
 	manage.GET("/comment", func(ctx *gin.Context) {
 		db := database.Get()
