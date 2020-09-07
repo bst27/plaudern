@@ -45,7 +45,7 @@ import {logger} from "./store/dev/logger.reducer";
     StoreModule.forRoot({
       comments: commentsReducer,
     }, {
-      metaReducers: isDevMode() ? [
+      metaReducers: true || isDevMode() ? [// TODO: We cannot run in prod mode with this check here because it errors
         logger,
       ] : []
     }),
