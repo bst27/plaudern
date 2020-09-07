@@ -29,6 +29,7 @@ func registerManageRoutes(r *gin.Engine, config *configuration.Config, policy *b
 		// Redirect URLs to allow Angular router to handle the routing. Otherwise calling URLs
 		// like this http://localhost:8080/manage/app/comments/2deac5b6-73ef-4fa6-b207-6fc5370e1e40
 		// directly will not work because the server searches for the file and cannot find it.
+		// Read more: https://angular.io/guide/deployment#server-configuration
 
 		if strings.HasPrefix(ctx.Request.URL.Path, "/manage/app/") {
 			ctx.File(filepath.Join(filepath.Dir(execFile), "web", "index.html"))
