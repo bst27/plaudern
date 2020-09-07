@@ -31,7 +31,7 @@ export class CommentCardComponent implements OnInit {
   }
 
   secondaryButtonText(): string {
-    return 'Edit';
+    return 'View';
   }
 
   showPrimaryBtn(): boolean {
