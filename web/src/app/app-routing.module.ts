@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/comments' },
   { path: 'comments', component: CommentsComponent },
   { path: 'comments/:commentId', component: CommentDetailsCardComponent },
+  { path: '**', redirectTo: '/comments' }// Fallback: redirect to homepage if route does not exist
 ];
 
 @NgModule({
