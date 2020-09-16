@@ -22,6 +22,7 @@ import { EffectsModule } from '@ngrx/effects';
 import {CommentsEffects} from './store/comments/comments.effects';
 import {logger} from './store/dev/logger.reducer';
 import {environment} from '../environments/environment';
+import { LoginComponent } from './components/login/login/login.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {environment} from '../environments/environment';
     CommentsComponent,
     NavigationComponent,
     CommentCardComponent,
-    CommentDetailsCardComponent
+    CommentDetailsCardComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
