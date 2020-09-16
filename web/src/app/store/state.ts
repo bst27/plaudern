@@ -1,5 +1,5 @@
-import {CommentsState} from "./comments/comments.reducer";
+import {CommentsState} from './comments/comments.reducer';
 
 export type State = {
   comments: CommentsState,
-}
+};

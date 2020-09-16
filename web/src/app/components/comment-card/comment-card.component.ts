@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Comment} from "../../models/comment";
-import {primaryButtonClicked, secondaryButtonClicked} from "../../store/comments/comments.actions";
-import {Store} from "@ngrx/store";
-import {Router} from "@angular/router";
+import {Comment} from '../../models/comment';
+import {primaryButtonClicked, secondaryButtonClicked} from '../../store/comments/comments.actions';
+import {Store} from '@ngrx/store';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-comment-card',
@@ -11,7 +11,7 @@ import {Router} from "@angular/router";
 })
 export class CommentCardComponent implements OnInit {
 
-  @Input() comment: Comment
+  @Input() comment: Comment;
 
   constructor(
     private store: Store,
@@ -25,7 +25,7 @@ export class CommentCardComponent implements OnInit {
     switch (this.comment.Status) {
       case 'created': return 'Approve';
       case 'published': return 'Revoke';
-      case 'deleted': return '';// hide button
+      case 'deleted': return ''; // hide button
       default: console.error('Handle me'); return '';
     }
   }
@@ -44,13 +44,13 @@ export class CommentCardComponent implements OnInit {
 
   get primaryBtnClassList(): object {
     return {
-      'hidden': !this.showPrimaryBtn(),
+      hidden: !this.showPrimaryBtn(),
     };
   }
 
   get secondaryBtnClassList(): object {
     return {
-      'hidden': !this.showSecondaryBtn(),
+      hidden: !this.showSecondaryBtn(),
     };
   }
 

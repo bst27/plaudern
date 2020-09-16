@@ -1,8 +1,8 @@
-import {ActionReducer} from "@ngrx/store";
+import {ActionReducer} from '@ngrx/store';
 
 export function logger(reducer: ActionReducer<any>): ActionReducer<any> {
   return function(state, action) {
-    console.log(action.type, { action: action, state: state});
+    console.log(action.type, { action, state});
     return reducer(state, action);
   };
 }

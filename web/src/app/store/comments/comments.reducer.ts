@@ -1,16 +1,16 @@
-import { createReducer, on } from "@ngrx/store";
+import { createReducer, on } from '@ngrx/store';
 import {
   commentApproved,
   commentRevoked,
   commentsLoadedSuccess,
   primaryButtonClicked,
   secondaryButtonClicked
-} from "./comments.actions";
-import {Comment} from "../../models/comment";
+} from './comments.actions';
+import {Comment} from '../../models/comment';
 
 export type CommentsState = {
   comments: Comment[],
-}
+};
 
 export const initState: CommentsState = {
   comments: [],

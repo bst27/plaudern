@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Comment} from "../../models/comment";
-import {ActivatedRoute} from "@angular/router";
-import {select, Store} from "@ngrx/store";
-import {State} from "../../store/state";
-import {loadComment} from "../../store/comments/comments.actions";
+import {Comment} from '../../models/comment';
+import {ActivatedRoute} from '@angular/router';
+import {select, Store} from '@ngrx/store';
+import {State} from '../../store/state';
+import {loadComment} from '../../store/comments/comments.actions';
 
 @Component({
   selector: 'app-comment-details-card',
@@ -28,9 +28,9 @@ export class CommentDetailsCardComponent implements OnInit {
           return state.comments.comments.find(comment => comment.Id === params.get('commentId'));
         })).subscribe(comment => {
           this.comment = comment;
-        })
+        });
       }
-    })
+    });
   }
 
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Comment } from "../../models/comment";
-import {select, Store} from "@ngrx/store";
-import {Observable} from "rxjs";
-import {loadComments} from "../../store/comments/comments.actions";
-import {State} from "../../store/state";
+import { Comment } from '../../models/comment';
+import {select, Store} from '@ngrx/store';
+import {Observable} from 'rxjs';
+import {loadComments} from '../../store/comments/comments.actions';
+import {State} from '../../store/state';
 
 @Component({
   selector: 'app-comments',

@@ -1,5 +1,5 @@
-import {createAction, props} from "@ngrx/store";
-import {Comment} from "../../models/comment";
+import {createAction, props} from '@ngrx/store';
+import {Comment} from '../../models/comment';
 
 export const primaryButtonClicked = createAction(
   '[Comment Card Component] Primary Button Clicked',

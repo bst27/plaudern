@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {Observable, of} from "rxjs";
-import {Comment} from "../models/comment";
-import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs/operators";
-import {CommentResponse} from "../models/comment-response";
+import {Observable, of} from 'rxjs';
+import {Comment} from '../models/comment';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import {CommentResponse} from '../models/comment-response';
 
 @Injectable({
   providedIn: 'root'
