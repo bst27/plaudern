@@ -23,4 +23,11 @@ Plaudern is an app to manage comments for static websites.
 See the [examples](examples) directory for examples.
 
 # Build
-To build executables for multiple platforms you can use the build script at `scripts/build.sh`.
+To build executables for multiple platforms as well as the Angular based webinterface
+you can use the build script at `scripts/build.sh`.
+
+To simplify webinterface development jump into the `web` directory and use
+`ng serve --host 0.0.0.0 --disableHostCheck --open` to launch a hot-reloading webserver
+which is accessible from other devices, too. If you only want to make it available
+locally use `ng serve --open`. The webserver will proxy API requests to `http://localhost:8080`
+so make sure you have the backend up and running on this endpoint.
