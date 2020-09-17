@@ -1,1 +1,7 @@
-<p>TODO: Show login form here</p>
+<div>
+  <p>{{message}}</p>
+  <p *ngIf="isLoggedIn !== undefined">
+    <button *ngIf="!isLoggedIn" (click)="login()">Login</button>
+    <button *ngIf="isLoggedIn" (click)="logout()">Logout</button>
+  </p>
+</div>
