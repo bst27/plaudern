@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {delay} from 'rxjs/operators';
 
 @Injectable({
@@ -7,23 +7,23 @@ import {delay} from 'rxjs/operators';
 })
 export class AuthService {
 
-  private loggedIn: boolean;
+  private readonly loggedIn: BehaviorSubject<boolean>;
 
   constructor() {
-    this.loggedIn = false;
+    this.loggedIn = new BehaviorSubject<boolean>(false);
   }
 
   isLoggedIn(): Observable<boolean> {
-    return of(this.loggedIn).pipe(delay(100)); // TODO: Handle authentication
+    return this.loggedIn; // TODO: Handle authentication
   }
 
-  login(): Observable<boolean> {
-    this.loggedIn = true;
-    return of(this.loggedIn).pipe(delay(3000)); // TODO: Handle authentication
+  login(): Observable<void> {
+    setTimeout(() => { this.loggedIn.next(true); }, 3000); // TODO: Handle authentication
+    return of(undefined).pipe(delay(3000));
   }
 
   logout(): Observable<boolean> {
-    this.loggedIn = false;
-    return of(this.loggedIn).pipe(delay(3000)); // TODO: Handle authentication
+    setTimeout(() => { this.loggedIn.next(false); }, 3000); // TODO: Handle authentication
+    return of(undefined).pipe(delay(3000));
   }
 }

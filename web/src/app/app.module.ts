@@ -23,6 +23,8 @@ import {CommentsEffects} from './store/comments/comments.effects';
 import {logger} from './store/dev/logger.reducer';
 import {environment} from '../environments/environment';
 import { LoginComponent } from './components/login/login/login.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import { LoginComponent } from './components/login/login/login.component';
     }),
     EffectsModule.forRoot([
       CommentsEffects,
-    ])
+    ]),
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

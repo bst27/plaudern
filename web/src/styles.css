@@ -19,7 +19,8 @@ h1 {
 }
 
 app-comment-card,
-app-comment-details-card
+app-comment-details-card,
+app-login
 {
   padding : 1em;
 }
