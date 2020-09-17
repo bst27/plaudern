@@ -25,6 +25,9 @@ import {environment} from '../environments/environment';
 import { LoginComponent } from './components/login/login/login.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { LoadingDialogComponent } from './components/loading-dialog/loading-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import {MatInputModule} from '@angular/material/input';
     NavigationComponent,
     CommentCardComponent,
     CommentDetailsCardComponent,
-    LoginComponent
+    LoginComponent,
+    LoadingDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +51,7 @@ import {MatInputModule} from '@angular/material/input';
     MatIconModule,
     MatListModule,
     MatCardModule,
+    MatDialogModule,
     StoreModule.forRoot({
       comments: commentsReducer,
     }, {
@@ -58,7 +63,8 @@ import {MatInputModule} from '@angular/material/input';
       CommentsEffects,
     ]),
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
+import {MatDialog} from '@angular/material/dialog';
+import {LoadingDialogComponent} from '../../loading-dialog/loading-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -9,43 +11,34 @@ import {AuthService} from '../../../services/auth.service';
 export class LoginComponent implements OnInit {
 
   isLoggedIn: boolean;
-  message: string;
-  readonly: boolean;
   hidePassword: boolean;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private loadingDialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
-    this.message = 'Checking status ...';
-    this.readonly = true;
     this.hidePassword = true;
 
     this.authService.isLoggedIn().subscribe(loggedIn => {
       this.isLoggedIn = loggedIn;
-      this.message = '';
-      this.readonly = false;
     });
   }
 
   login(): void {
-    this.message = 'Log in ...';
-    this.readonly = true;
+    const dialog = this.loadingDialog.open(LoadingDialogComponent);
 
     this.authService.login().subscribe(() => {
-      this.message = '';
-      this.readonly = false;
+      dialog.close();
     });
   }
 
   logout(): void {
-    this.message = 'Log out ...';
-    this.readonly = true;
+    const dialog = this.loadingDialog.open(LoadingDialogComponent);
 
     this.authService.logout().subscribe(() => {
-      this.message = '';
-      this.readonly = false;
+      dialog.close();
     });
   }
 
