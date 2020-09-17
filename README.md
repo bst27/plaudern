@@ -30,4 +30,5 @@ To simplify webinterface development jump into the `web` directory and use
 `ng serve --host 0.0.0.0 --disableHostCheck --open` to launch a hot-reloading webserver
 which is accessible from other devices, too. If you only want to make it available
 locally use `ng serve --open`. The webserver will proxy API requests to `http://localhost:8080`
-so make sure you have the backend up and running on this endpoint.
+so make sure you have the backend up and running on this endpoint. You can use
+`scripts/develop.sh` which handles this for you.
