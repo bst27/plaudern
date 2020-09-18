@@ -18,6 +18,7 @@
 * As an admin I want to auto-approve new comments via webhook
 * As an admin I want to filter/search comments
 * As a desktop user I want to have an optimized UI for large screens
+* As an admin I want to have a translated webinterface
 
 # About
 Plaudern is an app to manage comments for static websites.
