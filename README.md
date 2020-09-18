@@ -2,17 +2,20 @@
 
 # This project is work in progress
 ## TODOS
+### MVP
 * As an admin I want to approve comments [x]
+* As an admin I want to protect my backend with credentials
+* As an admin I want my backend to be CSRF secured
+* As an admin I want to create a backup / extract my data
+
+### Backlog
 * As an admin I want to change comment messages
 * As an admin I want to change comment authors
 * As an admin I want to change comment thread IDs
 * As an admin I want to delete comments
-* As an admin I want to protect my backend with credentials
-* As an admin I want to create a backup / extract my data
 * As an admin I may want to collect the users email address
 * As an admin I want to disable/enable comments for selected threads
 * As an admin I want to auto-approve new comments via webhook
-* As an admin I want my backend to be CSRF secured
 * As an admin I want to filter/search comments
 
 
