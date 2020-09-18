@@ -37,6 +37,7 @@ export class NavigationComponent implements OnInit {
     const dialog = this.loadingDialog.open(LoadingDialogComponent);
 
     this.authService.logout().subscribe(() => {
+      // TODO: Check why this code is not executed
       dialog.close();
     });
   }

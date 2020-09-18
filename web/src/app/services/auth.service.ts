@@ -22,7 +22,7 @@ export class AuthService {
     return of(undefined).pipe(delay(3000));
   }
 
-  logout(): Observable<boolean> {
+  logout(): Observable<void> {
     setTimeout(() => { this.loggedIn.next(false); }, 3000); // TODO: Handle authentication
     return of(undefined).pipe(delay(3000));
   }
