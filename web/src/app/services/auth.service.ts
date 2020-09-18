@@ -17,7 +17,7 @@ export class AuthService {
     return this.loggedIn; // TODO: Handle authentication
   }
 
-  login(): Observable<void> {
+  login(password: string): Observable<void> {
     setTimeout(() => { this.loggedIn.next(true); }, 3000); // TODO: Handle authentication
     return of(undefined).pipe(delay(3000));
   }

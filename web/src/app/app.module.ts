@@ -28,6 +28,7 @@ import {MatInputModule} from '@angular/material/input';
 import { LoadingDialogComponent } from './components/loading-dialog/loading-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -39,33 +40,34 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     LoginComponent,
     LoadingDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatCardModule,
-    MatDialogModule,
-    StoreModule.forRoot({
-      comments: commentsReducer,
-    }, {
-      metaReducers: !environment.production ? [
-        logger,
-      ] : []
-    }),
-    EffectsModule.forRoot([
-      CommentsEffects,
-    ]),
-    MatFormFieldModule,
-    MatInputModule,
-    MatProgressBarModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        LayoutModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        MatCardModule,
+        MatDialogModule,
+        StoreModule.forRoot({
+            comments: commentsReducer,
+        }, {
+            metaReducers: !environment.production ? [
+                logger,
+            ] : []
+        }),
+        EffectsModule.forRoot([
+            CommentsEffects,
+        ]),
+        MatFormFieldModule,
+        MatInputModule,
+        MatProgressBarModule,
+        FormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
