@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
 import {MatDialog} from '@angular/material/dialog';
 import {LoadingDialogComponent} from '../../loading-dialog/loading-dialog.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private loadingDialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +37,9 @@ export class LoginComponent implements OnInit {
       this.authService.isLoggedIn().subscribe(loggedIn => {
         if (loggedIn) {
           this.password = '';
+
+          // Navigate to homepage
+          this.router.navigateByUrl('/');
         }
 
         dialog.close();
