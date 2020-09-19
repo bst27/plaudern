@@ -23,7 +23,7 @@ func GetDefault() *Config {
 	return &Config{
 		Port:              8080,
 		AllowedOrigins:    origins,
-		DatabaseFile:      "plaudern-data.db",
+		DatabaseFile:      "plaudern.db",
 		NewCommentWebhook: "",
 		AdminPassword:     "",
 	}
