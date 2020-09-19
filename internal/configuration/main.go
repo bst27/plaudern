@@ -10,6 +10,7 @@ type Config struct {
 	AllowedOrigins    []string
 	DatabaseFile      string
 	NewCommentWebhook string
+	AdminPassword     string
 }
 
 func GetDefault() *Config {
@@ -24,6 +25,7 @@ func GetDefault() *Config {
 		AllowedOrigins:    origins,
 		DatabaseFile:      "plaudern-data.db",
 		NewCommentWebhook: "",
+		AdminPassword:     "",
 	}
 }
 
