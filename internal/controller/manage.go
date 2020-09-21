@@ -40,6 +40,10 @@ func registerManageRoutes(r *gin.Engine, config *configuration.Config, policy *b
 	})
 
 	manage.GET("/comment", func(ctx *gin.Context) {
+		if !checkAuth(ctx, tokenStore) {
+			return
+		}
+
 		db := database.Get()
 
 		cmnts, err := comment.GetAll(db)
@@ -53,6 +57,10 @@ func registerManageRoutes(r *gin.Engine, config *configuration.Config, policy *b
 	})
 
 	manage.PUT("/comment/:commentId", func(ctx *gin.Context) {
+		if !checkAuth(ctx, tokenStore) {
+			return
+		}
+
 		req, err := request.ParsePutComment(ctx)
 
 		if err != nil {
