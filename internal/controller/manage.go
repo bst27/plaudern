@@ -57,7 +57,7 @@ func registerManageRoutes(r *gin.Engine, config *configuration.Config, policy *b
 	})
 
 	manage.PUT("/comment/:commentId", func(ctx *gin.Context) {
-		if !checkAuth(ctx, tokenStore) {
+		if !checkAuth(ctx, tokenStore) || !checkXsrf(ctx) {
 			return
 		}
 
@@ -124,12 +124,19 @@ func registerManageRoutes(r *gin.Engine, config *configuration.Config, policy *b
 		}
 
 		authToken := tokenStore.NewToken()
-		ctx.SetCookie("auth-token", authToken, 60*60*24*2, "", "", false, true) //TODO
+		xsrfToken := string([]rune(authToken)[0:32])
+
+		ctx.SetCookie("auth-token", authToken, 60*60*24*2, "", "", false, true)  //TODO
+		ctx.SetCookie("XSRF-TOKEN", xsrfToken, 60*60*24*2, "", "", false, false) //TODO
 
 		ctx.JSON(http.StatusOK, response.NewGetAuth(tokenStore.CheckToken(authToken)))
 	})
 
 	manage.POST("/logout", func(ctx *gin.Context) {
+		if !checkXsrf(ctx) {
+			return
+		}
+
 		req, err := request.ParseGetAuth(ctx)
 
 		if err != nil {
@@ -140,7 +147,8 @@ func registerManageRoutes(r *gin.Engine, config *configuration.Config, policy *b
 		}
 
 		tokenStore.RemoveToken(req.Token)
-		ctx.SetCookie("auth-token", "", -1, "", "", false, true) //TODO
+		ctx.SetCookie("auth-token", "", -1, "", "", false, true)  //TODO
+		ctx.SetCookie("XSRF-TOKEN", "", -1, "", "", false, false) //TODO
 
 		ctx.JSON(http.StatusOK, response.NewGetAuth(tokenStore.CheckToken(req.Token)))
 	})

@@ -30,6 +30,10 @@ type Auth struct {
 	Token string
 }
 
+type Xsrf struct {
+	Token string
+}
+
 func ParseCreateComment(r *gin.Context) (*CreateComment, error) {
 	author := r.PostForm("author")
 	msg := r.PostForm("message")
@@ -113,4 +117,18 @@ func ParseGetAuth(r *gin.Context) (*Auth, error) {
 	return &Auth{
 		Token: token,
 	}, nil
+}
+
+func ParseXsrf(r *gin.Context) *Xsrf {
+	token, err := r.Cookie("XSRF-TOKEN")
+
+	if err != nil {
+		return &Xsrf{
+			Token: "",
+		}
+	}
+
+	return &Xsrf{
+		Token: token,
+	}
 }
