@@ -137,15 +137,7 @@ func registerManageRoutes(r *gin.Engine, config *configuration.Config, policy *b
 			return
 		}
 
-		req, err := request.ParseGetAuth(ctx)
-
-		if err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{
-				"Error": err.Error(),
-			})
-			return
-		}
-
+		req := request.ParseGetAuth(ctx)
 		tokenStore.RemoveToken(req.Token)
 		ctx.SetCookie("auth-token", "", -1, "", "", false, true)  //TODO
 		ctx.SetCookie("XSRF-TOKEN", "", -1, "", "", false, false) //TODO
@@ -154,15 +146,7 @@ func registerManageRoutes(r *gin.Engine, config *configuration.Config, policy *b
 	})
 
 	manage.GET("/auth", func(ctx *gin.Context) {
-		req, err := request.ParseGetAuth(ctx)
-
-		if err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{
-				"Error": err.Error(),
-			})
-			return
-		}
-
+		req := request.ParseGetAuth(ctx)
 		ctx.JSON(http.StatusOK, response.NewGetAuth(tokenStore.CheckToken(req.Token)))
 	})
 }

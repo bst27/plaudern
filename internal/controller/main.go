@@ -17,14 +17,7 @@ func RegisterRoutes(r *gin.Engine, config *configuration.Config) {
 }
 
 func checkAuth(ctx *gin.Context, ts *auth.TokenStore) bool {
-	req, err := request.ParseGetAuth(ctx)
-
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"Error": err.Error(),
-		})
-		return false
-	}
+	req := request.ParseGetAuth(ctx)
 
 	if !ts.CheckToken(req.Token) {
 		ctx.JSON(http.StatusForbidden, gin.H{})
@@ -34,15 +27,7 @@ func checkAuth(ctx *gin.Context, ts *auth.TokenStore) bool {
 }
 
 func checkXsrf(ctx *gin.Context) bool {
-	auth, err := request.ParseGetAuth(ctx)
-
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"Error": err.Error(),
-		})
-		return false
-	}
-
+	auth := request.ParseGetAuth(ctx)
 	xsrf := request.ParseXsrf(ctx)
 
 	// Always block empty xsrf tokens

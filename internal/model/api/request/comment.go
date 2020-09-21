@@ -104,25 +104,26 @@ func ParseLogin(r *gin.Context) (*Login, error) {
 	}, nil
 }
 
-func ParseGetAuth(r *gin.Context) (*Auth, error) {
+func ParseGetAuth(r *gin.Context) *Auth {
 	token, err := r.Cookie("auth-token")
 
 	if err != nil {
 		// Return empty token if cookie is not present
 		return &Auth{
 			Token: "",
-		}, nil
+		}
 	}
 
 	return &Auth{
 		Token: token,
-	}, nil
+	}
 }
 
 func ParseXsrf(r *gin.Context) *Xsrf {
 	token, err := r.Cookie("XSRF-TOKEN")
 
 	if err != nil {
+		// Return empty token if cookie is not present
 		return &Xsrf{
 			Token: "",
 		}
