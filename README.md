@@ -4,7 +4,7 @@
 ## TODOS
 ### MVP
 * As an admin I want to approve comments [x]
-* As an admin I want to protect my backend with credentials
+* As an admin I want to protect my backend with credentials [x]
 * As an admin I want my backend to be CSRF secured
 * As an admin I want to create a backup / extract my data
 
