@@ -32,24 +32,27 @@ func (ts *TokenStore) NewToken() string {
 }
 
 func (ts *TokenStore) CheckToken(authToken string) bool {
+	ts.deleteExpired()
+
 	tokens := *ts.tokens
-	if expires, exists := tokens[authToken]; !exists {
-		return false
-	} else {
-		if expires.Unix() < time.Now().Unix() {
-			// Clean up expired tokens
-			delete(tokens, authToken)
-
-			return false
-		}
-
-		return true
-	}
+	_, exists := tokens[authToken]
+	return exists
 }
 
 func (ts *TokenStore) RemoveToken(authToken string) {
 	tokens := *ts.tokens
 	if _, exists := tokens[authToken]; exists { // TODO: We have a race condition here
 		delete(tokens, authToken)
+	}
+}
+
+func (ts *TokenStore) deleteExpired() {
+	tokens := *ts.tokens
+	now := time.Now().Unix()
+
+	for token, expires := range tokens {
+		if expires.Unix() < now {
+			delete(tokens, token)
+		}
 	}
 }
