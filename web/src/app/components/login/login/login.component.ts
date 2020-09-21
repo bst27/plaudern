@@ -33,17 +33,15 @@ export class LoginComponent implements OnInit {
   login(): void {
     const dialog = this.loadingDialog.open(LoadingDialogComponent);
 
-    this.authService.login(this.password).subscribe(() => {
-      this.authService.isLoggedIn().subscribe(loggedIn => {
-        if (loggedIn) {
-          this.password = '';
+    this.authService.login(this.password).subscribe(loggedIn => {
+      if (loggedIn) {
+        this.password = '';
 
-          // Navigate to homepage
-          this.router.navigateByUrl('/');
-        }
+        // Navigate to homepage
+        this.router.navigateByUrl('/');
+      }
 
-        dialog.close();
-      });
+      dialog.close();
     });
   }
 

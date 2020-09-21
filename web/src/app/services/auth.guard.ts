@@ -22,9 +22,11 @@ export class AuthGuard implements CanActivate {
   }
 
   checkLogin(): Observable<true|UrlTree> {
-    return this.authService.isLoggedIn().pipe(map(isLoggedIn => {
-      return isLoggedIn ? true : this.router.parseUrl('/login');
-    }));
+    return this.authService.checkLogin().pipe(
+      map(isLoggedIn => {
+        return isLoggedIn ? true : this.router.parseUrl('/login');
+      })
+    );
   }
 
 }

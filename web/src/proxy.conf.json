@@ -2,5 +2,17 @@
   "/manage/comment": {
     "target": "http://localhost:8080",
     "secure": false
+  },
+  "/manage/login": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/manage/auth": {
+    "target": "http://localhost:8080",
+    "secure": false
+  },
+  "/manage/logout": {
+    "target": "http://localhost:8080",
+    "secure": false
   }
 }
