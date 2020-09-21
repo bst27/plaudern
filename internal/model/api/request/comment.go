@@ -22,6 +22,14 @@ type PutComment struct {
 	Status       string
 }
 
+type Login struct {
+	Password string
+}
+
+type Auth struct {
+	Token string
+}
+
 func ParseCreateComment(r *gin.Context) (*CreateComment, error) {
 	author := r.PostForm("author")
 	msg := r.PostForm("message")
@@ -81,5 +89,28 @@ func ParsePutComment(r *gin.Context) (*PutComment, error) {
 		CommentId:    commentId,
 		UpdateStatus: updateStatus,
 		Status:       status,
+	}, nil
+}
+
+func ParseLogin(r *gin.Context) (*Login, error) {
+	password := r.DefaultPostForm("password", "")
+
+	return &Login{
+		Password: password,
+	}, nil
+}
+
+func ParseGetAuth(r *gin.Context) (*Auth, error) {
+	token, err := r.Cookie("auth-token")
+
+	if err != nil {
+		// Return empty token if cookie is not present
+		return &Auth{
+			Token: "",
+		}, nil
+	}
+
+	return &Auth{
+		Token: token,
 	}, nil
 }

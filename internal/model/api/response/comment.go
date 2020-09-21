@@ -13,6 +13,10 @@ type PutComment struct {
 	Comment interface{}
 }
 
+type GetAuth struct {
+	Authorized bool
+}
+
 func NewGetComments(
 	comments []*comment.Comment,
 	policy *bluemonday.Policy,
@@ -35,5 +39,11 @@ func NewPutComment(
 ) *PutComment {
 	return &PutComment{
 		Comment: cmnt.GetFrontendData(policy, asAdmin),
+	}
+}
+
+func NewGetAuth(authorized bool) *GetAuth {
+	return &GetAuth{
+		Authorized: authorized,
 	}
 }

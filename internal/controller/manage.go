@@ -5,6 +5,7 @@ import (
 	"github.com/bst27/plaudern/internal/database"
 	"github.com/bst27/plaudern/internal/model/api/request"
 	"github.com/bst27/plaudern/internal/model/api/response"
+	"github.com/bst27/plaudern/internal/model/auth"
 	"github.com/bst27/plaudern/internal/model/comment"
 	"github.com/gin-gonic/gin"
 	"github.com/microcosm-cc/bluemonday"
@@ -20,6 +21,8 @@ func registerManageRoutes(r *gin.Engine, config *configuration.Config, policy *b
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	tokenStore := auth.NewTokenStore()
 
 	manage := r.Group("/manage")
 
@@ -94,5 +97,56 @@ func registerManageRoutes(r *gin.Engine, config *configuration.Config, policy *b
 		}
 
 		ctx.JSON(http.StatusOK, response.NewPutComment(cmnt, policy, true))
+	})
+
+	manage.POST("/login", func(ctx *gin.Context) {
+		req, err := request.ParseLogin(ctx)
+
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"Error": err.Error(),
+			})
+			return
+		}
+
+		// Block login without (= with empty/default) password
+		if req.Password == "" || req.Password != config.AdminPassword {
+			ctx.JSON(http.StatusOK, response.NewGetAuth(false))
+			return
+		}
+
+		authToken := tokenStore.NewToken()
+		ctx.SetCookie("auth-token", authToken, 60*60*24*2, "", "", false, true) //TODO
+
+		ctx.JSON(http.StatusOK, response.NewGetAuth(tokenStore.CheckToken(authToken)))
+	})
+
+	manage.POST("/logout", func(ctx *gin.Context) {
+		req, err := request.ParseGetAuth(ctx)
+
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"Error": err.Error(),
+			})
+			return
+		}
+
+		tokenStore.RemoveToken(req.Token)
+		ctx.SetCookie("auth-token", "", -1, "", "", false, true) //TODO
+
+		ctx.JSON(http.StatusOK, response.NewGetAuth(tokenStore.CheckToken(req.Token)))
+	})
+
+	manage.GET("/auth", func(ctx *gin.Context) {
+		req, err := request.ParseGetAuth(ctx)
+
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"Error": err.Error(),
+			})
+			return
+		}
+
+		ctx.JSON(http.StatusOK, response.NewGetAuth(tokenStore.CheckToken(req.Token)))
 	})
 }
