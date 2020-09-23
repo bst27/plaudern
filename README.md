@@ -28,6 +28,14 @@ Plaudern is an app to manage comments for static websites.
 # Examples
 See the [examples](examples) directory for examples.
 
+# How to backup and restore
+To create a backup simply make a copy of your database file (defined in the config)
+and the app config file. To restore the backup simply use the database file
+and the config file to start the Plaudern app:
+```
+./plaudern serve --config="/backup/plaudern-config.json"
+```
+
 # Build
 To build executables for multiple platforms as well as the Angular based webinterface
 you can use the build script at `scripts/build.sh`.
