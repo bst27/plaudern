@@ -6,7 +6,7 @@
 * As an admin I want to approve comments [x]
 * As an admin I want to protect my backend with credentials [x]
 * As an admin I want my backend to be CSRF secured [x]
-* As an admin I want to create a backup / extract my data
+* As an admin I want to create and restore a backup [x]
 
 ### Backlog
 * As an admin I want to change comment messages
@@ -21,6 +21,7 @@
 * As an admin I want to have a translated webinterface
 * As an admin I want to format new comments via webhook
 * As a comment writer I want to reply to existing comments
+* As an admin I want to export my data (to JSON)
 
 # About
 Plaudern is an app to manage comments for static websites.
